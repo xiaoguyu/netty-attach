@@ -9,7 +9,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.io.FileInputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 /**
@@ -38,9 +37,8 @@ public class StorageUploadFileRequest extends FdfsRequest {
     private String fileExtName;
 
 
-    public StorageUploadFileRequest(long fileSize, String fileExtName) {
-        this.fileSize = fileSize;
-        this.fileExtName = fileExtName;
+    public StorageUploadFileRequest() {
+
     }
 
     /**
@@ -64,18 +62,14 @@ public class StorageUploadFileRequest extends FdfsRequest {
         }
     }
 
-    public static StorageUploadFileRequest createFromBytes(ByteBuf in, Charset charset) throws UnsupportedEncodingException {
+    @Override
+    public void loadParamFromBytes(ByteBuf in, Charset charset) throws Exception{
         long fileSize = in.readLong();
         byte[] fileExtName = new byte[OtherConstants.FDFS_FILE_EXT_NAME_MAX_LEN];
         in.readBytes(fileExtName);
-        int byteEndIdx = fileExtName.length;
-        for (int i = 0; i < fileExtName.length; i++) {
-            if (fileExtName[i] == 0) {
-                byteEndIdx = i;
-                break;
-            }
-        }
-        return new StorageUploadFileRequest(fileSize, new String(fileExtName, 0, byteEndIdx, charset.name()));
+
+        this.fileSize = fileSize;
+        this.fileExtName = BytesUtil.byte2EffectiveString(fileExtName, charset);
     }
 
     @Override

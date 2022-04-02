@@ -1,5 +1,7 @@
 package com.wjw.proto;
 
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.DefaultFileRegion;
 
@@ -33,12 +35,16 @@ public abstract class FdfsRequest extends FdfsProto {
         if (null != inputFile) {
             try {
                 // 零拷贝
-                ctx.write(new DefaultFileRegion(inputFile.getChannel(), 0, getFileSize()));
-            } finally {
+                ChannelFuture f = ctx.write(new DefaultFileRegion(inputFile.getChannel(), 0, getFileSize()));
+                f.addListener((ChannelFutureListener) future -> {
+                    inputFile.close();
+                });
+            } catch (Exception e) {
+                LOGGER.error("写入文件流失败", e);
                 try {
                     inputFile.close();
-                } catch (IOException e) {
-                    LOGGER.error("写入文件流失败", e);
+                } catch (IOException ioException) {
+                    LOGGER.error("写入文件流失败，源流关闭失败", ioException);
                 }
             }
         }

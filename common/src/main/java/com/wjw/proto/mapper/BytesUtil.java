@@ -1,5 +1,6 @@
 package com.wjw.proto.mapper;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -108,4 +109,22 @@ public class BytesUtil {
 
     }
 
+    /**
+     * 字节数组转有效字符串
+     * @param bytes 字节数组
+     * @param charset 编码
+     * @return
+     * @author wjw
+     * @date 2022/4/2 12:00
+     */
+    public static String byte2EffectiveString(byte[] bytes, Charset charset) throws UnsupportedEncodingException {
+        int byteEndIdx = bytes.length;
+        for (int i = 0; i < bytes.length; i++) {
+            if (bytes[i] == 0) {
+                byteEndIdx = i;
+                break;
+            }
+        }
+        return new String(bytes, 0, byteEndIdx, charset.name());
+    }
 }

@@ -26,10 +26,12 @@ public class ProtoHead {
     private long contentLength = 0;
     /**
      * 报文类型8位
+     * 在响应中，为状态码
      */
     private byte cmd;
     /**
      * 处理状态9位
+     * 下响应中，为错误码
      */
     private byte status = (byte) 0;
 
@@ -40,6 +42,12 @@ public class ProtoHead {
     public ProtoHead(byte cmd) {
         super();
         this.cmd = cmd;
+    }
+
+    public ProtoHead(byte cmd, byte status) {
+        super();
+        this.cmd = cmd;
+        this.status = status;
     }
 
     /**
@@ -117,4 +125,19 @@ public class ProtoHead {
         this.contentLength = contentLength;
     }
 
+    public static int getHeadLength() {
+        return HEAD_LENGTH;
+    }
+
+    public long getContentLength() {
+        return contentLength;
+    }
+
+    public byte getCmd() {
+        return cmd;
+    }
+
+    public byte getStatus() {
+        return status;
+    }
 }

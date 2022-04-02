@@ -1,6 +1,6 @@
 ## 项目介绍
 
-netty写的文件服务器（学习netty用），抄fastdfs就对了。还抄了tobato:fastdfs-client
+netty写的使用零拷贝的文件服务器（学习netty用），抄fastdfs就对了。还抄了tobato:fastdfs-client
 
 能力有限，有些东西抄一半，还请原谅。。。
 

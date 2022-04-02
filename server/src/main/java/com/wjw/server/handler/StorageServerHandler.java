@@ -1,6 +1,8 @@
 package com.wjw.server.handler;
 
+import cn.hutool.core.util.RandomUtil;
 import com.wjw.proto.ProtoHead;
+import com.wjw.server.config.NettyAttachConfig;
 import com.wjw.storage.StorageUploadFileRequest;
 import com.wjw.storage.StorePathResponse;
 import io.netty.buffer.ByteBuf;
@@ -13,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 /**
  * @author wjw
@@ -30,8 +31,9 @@ public class StorageServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
     private ProtoHead header;
     private StorageUploadFileRequest request;
 
-    private String basePath = "D:\\attach\\attach";
+    private String basePath = NettyAttachConfig.getBasePath();
     private FileOutputStream fos;
+    private String fileName;
     private int readedLen = 0;
 
     @Override
@@ -51,19 +53,21 @@ public class StorageServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
             }
             header = ProtoHead.createFromBytes(in);
         }
-        // 处理请求body
+        // 处理请求参数
         if (request == null) {
             if (in.readableBytes() < StorageUploadFileRequest.PARAM_LENGTH) {
                 return;
             }
-            request = StorageUploadFileRequest.createFromBytes(in, CharsetUtil.UTF_8);
+            request = new StorageUploadFileRequest();
+            request.loadParamFromBytes(in, CharsetUtil.UTF_8);
         }
         // 处理附件
         int readableBytes = in.readableBytes();
         if (readableBytes > 0) {
             if (fos == null) {
-                String filePath = basePath + File.separator + "testttt." + request.getFileExtName();
-                System.out.println(filePath);
+                // 随机生成文件名
+                fileName = RandomUtil.randomString(6) + "." + request.getFileExtName();
+                String filePath = basePath + fileName;
                 File file = new File(filePath);
                 if (!file.exists()) {
                     file.createNewFile();
@@ -84,15 +88,16 @@ public class StorageServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
     }
 
     private void sendResponse() {
-        StorePathResponse response = new StorePathResponse("ddd");
-        ctx.write(response);
+        StorePathResponse response = new StorePathResponse(fileName);
+        response.setSuccessHead();
+        ctx.writeAndFlush(response);
     }
 
     private void destroy() throws IOException {
-        ctx.close();
         if (null != fos) {
             fos.close();
         }
+        ctx.close();
         header = null;
         request = null;
     }

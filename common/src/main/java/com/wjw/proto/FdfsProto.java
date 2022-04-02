@@ -1,5 +1,6 @@
 package com.wjw.proto;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
@@ -23,12 +24,24 @@ public abstract class FdfsProto {
     protected ProtoHead head;
 
     /**
-     * 获取报文头(包内可见)
+     * 获取报文头
      *
      * @return
      */
-    ProtoHead getHead() {
+    public ProtoHead getHead() {
         return head;
+    }
+
+    public void setHead(ProtoHead head) {
+        this.head = head;
+    }
+
+    public void setSuccessHead() {
+        this.head = new ProtoHead(CmdConstants.FDFS_PROTO_CMD_RESP);
+    }
+
+    public void setErrorHead(byte errCode) {
+        this.head = new ProtoHead(CmdConstants.FDFS_PROTO_CMD_RESP, errCode);
     }
 
     /**
@@ -92,4 +105,15 @@ public abstract class FdfsProto {
         writeParam(ctx, charset);
         writeBody(ctx, charset);
     }
+
+    /**
+     * 写入参数
+     * @param in
+     * @param charset
+     * @return
+     * @apiNote
+     * @author wjw
+     * @date 2022/4/2 14:18
+     */
+    public abstract void loadParamFromBytes(ByteBuf in, Charset charset) throws Exception;
 }

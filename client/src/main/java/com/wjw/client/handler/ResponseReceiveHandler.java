@@ -1,12 +1,11 @@
 package com.wjw.client.handler;
 
 import com.wjw.proto.ProtoHead;
+import com.wjw.storage.StorePathResponse;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
-
-import java.util.Arrays;
+import io.netty.util.CharsetUtil;
 
 /**
  * @author wjw
@@ -17,13 +16,12 @@ import java.util.Arrays;
 public class ResponseReceiveHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     private ProtoHead header;
+    private StorePathResponse response;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         byte[] bytes = new byte[in.readableBytes()];
         in.getBytes(0, bytes);
-        System.out.println(Arrays.toString(bytes));
-        System.out.println(in.readerIndex());
         // 处理请求头
         if (header == null) {
             if (in.readableBytes() < ProtoHead.HEAD_LENGTH) {
@@ -33,7 +31,17 @@ public class ResponseReceiveHandler extends SimpleChannelInboundHandler<ByteBuf>
             System.out.println(header);
             System.out.println(in);
         }
-        System.out.println(in.readerIndex());
+        // 处理响应参数
+        if (response == null) {
+            if (in.readableBytes() < header.getContentLength()) {
+                return;
+            }
+            response = new StorePathResponse();
+            response.setHead(header);
+            response.loadParamFromBytes(in, CharsetUtil.UTF_8);
+            System.out.println("文件路径");
+            System.out.println(response.getPath());
+        }
     }
 
 }
