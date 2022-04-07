@@ -83,6 +83,14 @@ public class ProtoHead {
         return new ProtoHead(returnContentLength, returnCmd, returnStatus);
     }
 
+    public static ProtoHead createFromBytes(byte[] bytes) {
+        long returnContentLength = BytesUtil.buff2long(bytes, 0);
+        byte returnCmd = bytes[OtherConstants.PROTO_HEADER_CMD_INDEX];
+        byte returnStatus = bytes[OtherConstants.PROTO_HEADER_STATUS_INDEX];
+        // 返回解析出来的ProtoHead
+        return new ProtoHead(returnContentLength, returnCmd, returnStatus);
+    }
+
     /**
      * 能否创建请求头信息
      * @param in

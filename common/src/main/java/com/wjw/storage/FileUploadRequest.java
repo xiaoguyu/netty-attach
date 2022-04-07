@@ -13,11 +13,11 @@ import java.nio.charset.Charset;
 
 /**
  * @author wjw
- * @description: 文件上传命令
- * @title: StorageUploadFileRequest
+ * @description: 文件上传请求
+ * @title: FileUploadRequest
  * @date 2022/3/31 15:16
  */
-public class StorageUploadFileRequest extends FdfsRequest {
+public class FileUploadRequest extends FdfsRequest {
 
     private static final byte uploadCmd = CmdConstants.STORAGE_PROTO_CMD_UPLOAD_FILE;
     private static final byte uploadAppenderCmd = CmdConstants.STORAGE_PROTO_CMD_UPLOAD_APPENDER_FILE;
@@ -37,7 +37,7 @@ public class StorageUploadFileRequest extends FdfsRequest {
     private String fileExtName;
 
 
-    public StorageUploadFileRequest() {
+    public FileUploadRequest() {
 
     }
 
@@ -49,7 +49,7 @@ public class StorageUploadFileRequest extends FdfsRequest {
      * @param fileSize
      * @param isAppenderFile
      */
-    public StorageUploadFileRequest(FileInputStream inputStream, String fileExtName, long fileSize,
+    public FileUploadRequest(FileInputStream inputStream, String fileExtName, long fileSize,
                                     boolean isAppenderFile) {
         super();
         this.inputFile = inputStream;
@@ -65,11 +65,11 @@ public class StorageUploadFileRequest extends FdfsRequest {
     @Override
     public void loadParamFromBytes(ByteBuf in, Charset charset) throws Exception{
         long fileSize = in.readLong();
-        byte[] fileExtName = new byte[OtherConstants.FDFS_FILE_EXT_NAME_MAX_LEN];
-        in.readBytes(fileExtName);
+        byte[] fileExtNameBytes = new byte[OtherConstants.FDFS_FILE_EXT_NAME_MAX_LEN];
+        in.readBytes(fileExtNameBytes);
 
         this.fileSize = fileSize;
-        this.fileExtName = BytesUtil.byte2EffectiveString(fileExtName, charset);
+        this.fileExtName = BytesUtil.byte2EffectiveString(fileExtNameBytes, charset);
     }
 
     @Override

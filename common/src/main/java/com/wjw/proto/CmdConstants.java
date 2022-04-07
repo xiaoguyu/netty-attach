@@ -33,10 +33,10 @@ public final class CmdConstants {
     /**
      * 上传文件
      */
-    public static final byte STORAGE_PROTO_CMD_UPLOAD_FILE = 11;
-    public static final byte STORAGE_PROTO_CMD_DELETE_FILE = 12;
+    public static final byte STORAGE_PROTO_CMD_UPLOAD_FILE = 11; // 上传文件
+    public static final byte STORAGE_PROTO_CMD_DELETE_FILE = 12; // 删除文件
     public static final byte STORAGE_PROTO_CMD_SET_METADATA = 13;
-    public static final byte STORAGE_PROTO_CMD_DOWNLOAD_FILE = 14;
+    public static final byte STORAGE_PROTO_CMD_DOWNLOAD_FILE = 14; // 下载文件
     public static final byte STORAGE_PROTO_CMD_GET_METADATA = 15;
     public static final byte STORAGE_PROTO_CMD_UPLOAD_SLAVE_FILE = 21;
     public static final byte STORAGE_PROTO_CMD_QUERY_FILE_INFO = 22;

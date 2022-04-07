@@ -10,17 +10,17 @@ import java.nio.charset.Charset;
 /**
  * @author wjw
  * @description: 上传文件的响应参数
- * @title: StorePathResponse
+ * @title: FileUploadResponse
  * @date 2022/4/1 14:06
  */
-public class StorePathResponse extends FdfsResponse {
+public class FileUploadResponse extends FdfsResponse {
 
     private String path;
 
-    public StorePathResponse() {
+    public FileUploadResponse() {
     }
 
-    public StorePathResponse(String path) {
+    public FileUploadResponse(String path) {
         this.path = path;
     }
 
@@ -35,8 +35,8 @@ public class StorePathResponse extends FdfsResponse {
     }
 
     @Override
-    public void writeBody(ChannelHandlerContext ctx, Charset charset) {
-
+    public long getFileSize() {
+        return 0;
     }
 
     @Override

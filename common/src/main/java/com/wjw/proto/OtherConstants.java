@@ -26,9 +26,8 @@ public class OtherConstants {
      */
     public static final int PROTO_HEADER_STATUS_INDEX = FDFS_PROTO_PKG_LEN_SIZE + 1;
 
+    // 文件扩展名长度
     public static final byte FDFS_FILE_EXT_NAME_MAX_LEN = 6;
-    public static final byte FDFS_FILE_PREFIX_MAX_LEN = 16;
+    // 文件路径长度
     public static final byte FDFS_FILE_PATH_LEN = 10;
-    public static final byte FDFS_FILENAME_BASE64_LENGTH = 27;
-    public static final byte FDFS_TRUNK_FILE_INFO_LEN = 16;
 }

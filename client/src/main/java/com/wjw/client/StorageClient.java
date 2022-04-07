@@ -1,8 +1,9 @@
 package com.wjw.client;
 
+import com.wjw.client.handler.FileDownloadReceiveHandler;
 import com.wjw.client.handler.RequestSendHandler;
-import com.wjw.client.handler.ResponseReceiveHandler;
-import com.wjw.storage.StorageUploadFileRequest;
+import com.wjw.storage.FileDownloadRequest;
+import com.wjw.storage.FileUploadRequest;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -40,13 +41,14 @@ public class StorageClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new RequestSendHandler(), new ResponseReceiveHandler());
+                    ch.pipeline().addLast(new RequestSendHandler(), new FileDownloadReceiveHandler());
                 }
             });
 
             ChannelFuture f = b.connect(host, port).sync();
             channel = f.channel();
-            write("C:\\Users\\wjw\\Desktop\\hotelQrCode.jpg");
+//            write("C:\\Users\\wjw\\Desktop\\hotelQrCode.jpg");
+            download("j40q0h.jpg");
             f.channel().closeFuture().sync();
         } finally {
             worderGroup.shutdownGracefully();
@@ -57,12 +59,17 @@ public class StorageClient {
         File file = new File(path);
         try {
             FileInputStream fis = new FileInputStream(file);
-            StorageUploadFileRequest request = new StorageUploadFileRequest(fis, "jpg", file.length(), false);
+            FileUploadRequest request = new FileUploadRequest(fis, "jpg", file.length(), false);
             channel.write(request);
         } catch (Exception e) {
             e.printStackTrace();
         }
         channel.flush();
+    }
+
+    public void download(String path) {
+        FileDownloadRequest request = new FileDownloadRequest(path);
+        channel.writeAndFlush(request);
     }
 
     public static void main(String[] args) throws Exception {
