@@ -36,7 +36,6 @@ public abstract class AttachBaseHandler extends SimpleChannelInboundHandler<Byte
      * @param ctx
      * @param msg
      * @return
-     * @author wjw
      * @date 2022/4/6 14:44
      */
     private void baseInit(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
@@ -54,7 +53,6 @@ public abstract class AttachBaseHandler extends SimpleChannelInboundHandler<Byte
      * @param ctx
      * @param msg
      * @return
-     * @author wjw
      * @date 2022/4/6 14:44
      */
     protected void init(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
@@ -65,7 +63,6 @@ public abstract class AttachBaseHandler extends SimpleChannelInboundHandler<Byte
      * @param ctx
      * @param msg
      * @return
-     * @author wjw
      * @date 2022/4/6 14:53
      */
     @Override
@@ -80,7 +77,6 @@ public abstract class AttachBaseHandler extends SimpleChannelInboundHandler<Byte
      * @param ctx
      * @param msg
      * @return
-     * @author wjw
      * @date 2022/4/7 14:41
      */
     protected abstract void read(ChannelHandlerContext ctx, ByteBuf msg) throws Exception;

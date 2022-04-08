@@ -1,7 +1,6 @@
 package com.wjw.storage;
 
 import com.wjw.proto.AttachResponse;
-import com.wjw.proto.ErrorCodeConstants;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -21,6 +20,8 @@ public class FileDownloadResponse extends AttachResponse {
      */
     private long fileSize;
 
+    private byte[] fileBytes;
+
     public FileDownloadResponse() {
     }
 
@@ -38,6 +39,7 @@ public class FileDownloadResponse extends AttachResponse {
     @Override
     public long getBodyLength(Charset charset) {
         if (errMsg == null) {
+            // 文件长度 + 文件内容
             return 4 + fileSize;
         }
         return errMsg.getBytes(charset).length;
@@ -54,7 +56,7 @@ public class FileDownloadResponse extends AttachResponse {
 
     @Override
     public void loadParamFromBytes(ByteBuf in, Charset charset) throws Exception {
-        if (head.getStatus() == ErrorCodeConstants.SUCCESS) {
+        if (isSuccess()) {
             this.fileSize = in.readLong();
         }
     }
@@ -62,5 +64,13 @@ public class FileDownloadResponse extends AttachResponse {
     @Override
     public long getFileSize() {
         return fileSize;
+    }
+
+    public byte[] getFileBytes() {
+        return fileBytes;
+    }
+
+    public void setFileBytes(byte[] fileBytes) {
+        this.fileBytes = fileBytes;
     }
 }

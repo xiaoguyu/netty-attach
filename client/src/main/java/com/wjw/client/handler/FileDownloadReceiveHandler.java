@@ -1,7 +1,5 @@
 package com.wjw.client.handler;
 
-import com.wjw.handler.AttachBaseHandler;
-import com.wjw.proto.ErrorCodeConstants;
 import com.wjw.storage.FileDownloadResponse;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,31 +11,51 @@ import io.netty.util.CharsetUtil;
  * @title: FileDownloadReceiveHandler
  * @date 2022/4/6 15:35
  */
-public class FileDownloadReceiveHandler extends AttachBaseHandler {
+public class FileDownloadReceiveHandler extends ReceiveBaseHandler {
 
+    // 成功：body = fileSize + fileBytes
+    // 失败：body = errorMsg
     private FileDownloadResponse response;
+
+    private byte[] fileBytes;
+    private int readIdx;
 
     @Override
     protected void read(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
-        // 处理请求参数
-        if (response == null) {
-            if (msg.readableBytes() < 4) {
-                return;
+        // 处理请求参数，请求成功和失败的处理不同
+        if (header.isSuccess()) {
+            // 处理文件长度
+            if (response == null) {
+                if (msg.readableBytes() < 4) {
+                    return;
+                }
+                response = new FileDownloadResponse();
+                response.setHead(header);
+                response.loadParamFromBytes(msg, CharsetUtil.UTF_8);
             }
+            // 处理文件流
+            if (readIdx == 0) {
+                fileBytes = new byte[(int) response.getFileSize()];
+            }
+            int readableBytes = msg.readableBytes();
+            int length = 1 + readIdx + readableBytes > fileBytes.length ? fileBytes.length - readIdx - 1 : readableBytes;
+            msg.readBytes(fileBytes, readIdx, length);
+            readIdx += readableBytes;
+            if (readIdx >= fileBytes.length - 1) {
+                response.setFileBytes(fileBytes);
+                future.done(response);
+            }
+        } else {
+            // 处理异常信息
             response = new FileDownloadResponse();
             response.setHead(header);
-            response.loadParamFromBytes(msg, CharsetUtil.UTF_8);
-        }
-
-        // 处理请求参数
-        long contentLength = 0;
-        if (header.getStatus() != ErrorCodeConstants.SUCCESS && (contentLength = header.getContentLength()) > 0) {
-            byte[] errmsgBytes = new byte[(int)contentLength];
-            msg.readBytes(errmsgBytes);
-            System.out.println(new String(errmsgBytes, CharsetUtil.UTF_8));
-        } else {
-            // 这是成功返回的文件字节，还没想好怎么处理
-            System.out.println("触发文件字节");
+            if (header.getContentLength() <= 0) {
+                // future.done
+            } else {
+                byte[] errmsgBytes = new byte[(int) header.getContentLength()];
+                msg.readBytes(errmsgBytes);
+                response.setErrMsg(new String(errmsgBytes, CharsetUtil.UTF_8));
+            }
         }
     }
 }

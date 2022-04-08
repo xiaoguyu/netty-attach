@@ -1,6 +1,7 @@
 package com.wjw.server;
 
-import com.wjw.server.handler.RequestSendHandler;
+import com.wjw.handler.RequestSendHandler;
+import com.wjw.server.config.NettyAttachConfig;
 import com.wjw.server.handler.StorageServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -54,7 +55,7 @@ public class StorageServer {
     }
 
     public static void main(String[] args) throws Exception {
-        int port = 8088;
+        int port = NettyAttachConfig.getPort();
         new StorageServer(port).run();
     }
 }

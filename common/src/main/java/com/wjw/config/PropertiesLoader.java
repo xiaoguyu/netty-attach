@@ -1,4 +1,5 @@
-package com.wjw.server.config;
+package com.wjw.config;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +14,14 @@ import java.util.Properties;
  */
 public abstract class PropertiesLoader {
 
-    protected static Logger LOGGER = LoggerFactory.getLogger(NettyAttachConfig.class);
+    protected static Logger LOGGER = LoggerFactory.getLogger(PropertiesLoader.class);
 
     protected static Properties prop;
 
     public void load() {
         try {
             prop = new Properties();
-            prop.load(NettyAttachConfig.class.getClassLoader().getResourceAsStream(getFileName()));
+            prop.load(PropertiesLoader.class.getClassLoader().getResourceAsStream(getFileName()));
         } catch (Exception e) {
             LOGGER.error(String.format("netty-attach：加载配件文件[%s]出错，将使用默认配置!", getFileName()), e);
         }

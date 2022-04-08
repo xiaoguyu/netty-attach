@@ -44,7 +44,6 @@ public class FileDownloadHandler extends AttachBaseHandler {
      * 响应结果
      *
      * @return
-     * @author wjw
      * @date 2022/4/7 14:45
      */
     private void sendResponse() throws FileNotFoundException {
@@ -63,7 +62,6 @@ public class FileDownloadHandler extends AttachBaseHandler {
      * 销毁方法
      *
      * @return
-     * @author wjw
      * @date 2022/4/7 14:45
      */
     private void destroy() throws IOException {

@@ -34,7 +34,6 @@ public abstract class AttachResponse extends AttachProto {
      * @param ctx
      * @param charset
      * @return
-     * @author wjw
      * @date 2022/4/1 11:59
      */
     public void writeBody(ChannelHandlerContext ctx, Charset charset) {
@@ -65,12 +64,19 @@ public abstract class AttachResponse extends AttachProto {
      * 附件大小
      *
      * @return
-     * @author wjw
      * @date 2022/4/1 18:01
      */
     public abstract long getFileSize();
 
+    public boolean isSuccess() {
+        return head.isSuccess();
+    }
+
     public String getErrMsg() {
         return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 }

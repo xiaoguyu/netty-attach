@@ -28,7 +28,6 @@ public abstract class AttachRequest extends AttachProto {
      * @param ctx
      * @param charset
      * @return
-     * @author wjw
      * @date 2022/4/1 11:59
      */
     public void writeBody(ChannelHandlerContext ctx, Charset charset) {
@@ -54,7 +53,6 @@ public abstract class AttachRequest extends AttachProto {
      * 附件大小
      *
      * @return
-     * @author wjw
      * @date 2022/4/1 18:01
      */
     public abstract long getFileSize();

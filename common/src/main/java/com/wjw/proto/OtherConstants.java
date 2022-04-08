@@ -35,4 +35,8 @@ public class OtherConstants {
      * channel共享请求头的key
      */
     public static final String ATTR_KEY_HEAD = "head";
+    /**
+     * channel共享请求钩子的key
+     */
+    public static final String ATTR_KEY_FUTURE = "future";
 }

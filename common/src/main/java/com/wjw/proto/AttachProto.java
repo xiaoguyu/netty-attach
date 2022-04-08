@@ -59,7 +59,6 @@ public abstract class AttachProto {
      * @param ctx     netty上下文对象
      * @param charset 编码
      * @return
-     * @author wjw
      * @date 2022/4/1 18:04
      */
     public void writeHead(ChannelHandlerContext ctx, Charset charset) {
@@ -74,7 +73,6 @@ public abstract class AttachProto {
      *
      * @param charset 编码
      * @return
-     * @author wjw
      * @date 2022/3/31 15:39
      */
     public abstract void writeParam(ChannelHandlerContext ctx, Charset charset);
@@ -85,8 +83,6 @@ public abstract class AttachProto {
      * @param ctx     netty上下文对象
      * @param charset 编码
      * @return
-     * @apiNote
-     * @author wjw
      * @date 2022/4/1 14:04
      */
     public abstract void writeBody(ChannelHandlerContext ctx, Charset charset);
@@ -97,7 +93,6 @@ public abstract class AttachProto {
      * @param ctx     netty上下文对象
      * @param charset 编码
      * @return
-     * @author wjw
      * @date 2022/4/1 18:03
      */
     public void writeBytes(ChannelHandlerContext ctx, Charset charset) {
@@ -111,8 +106,6 @@ public abstract class AttachProto {
      * @param in
      * @param charset
      * @return
-     * @apiNote
-     * @author wjw
      * @date 2022/4/2 14:18
      */
     public abstract void loadParamFromBytes(ByteBuf in, Charset charset) throws Exception;

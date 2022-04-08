@@ -1,6 +1,5 @@
 package com.wjw.client.handler;
 
-import com.wjw.handler.AttachBaseHandler;
 import com.wjw.storage.FileUploadResponse;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +11,7 @@ import io.netty.util.CharsetUtil;
  * @title: FileUploadReceiveHandler
  * @date 2022/4/1 11:16
  */
-public class FileUploadReceiveHandler extends AttachBaseHandler {
+public class FileUploadReceiveHandler extends ReceiveBaseHandler {
 
     private FileUploadResponse response;
 
@@ -26,8 +25,8 @@ public class FileUploadReceiveHandler extends AttachBaseHandler {
             response = new FileUploadResponse();
             response.setHead(header);
             response.loadParamFromBytes(msg, CharsetUtil.UTF_8);
-            System.out.println("文件路径");
-            System.out.println(response.getPath());
+
+            future.done(response);
         }
     }
 }

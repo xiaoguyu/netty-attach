@@ -1,4 +1,4 @@
-package com.wjw.server.config;
+package com.wjw.client.config;
 
 import com.wjw.config.PropertiesLoader;
 
@@ -30,15 +30,13 @@ public class NettyAttachConfig extends PropertiesLoader {
     }
 
     /**
-     * 获取基础保存路径
+     * 获取连接地址
      *
      * @return
-     * @date 2022/4/2 11:01
+     * @date 2022/4/8 14:59
      */
-    public static String getBasePath() {
-        String basePath = getInstance().getProperty("base_dir", "storage_file").replaceAll("\\\\", "/");
-        if (basePath.length() > 0 && !basePath.endsWith("/")) basePath += "/";
-        return basePath;
+    public static String getHost() {
+        return getInstance().getProperty("host", "");
     }
 
     /**

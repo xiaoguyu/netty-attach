@@ -148,4 +148,8 @@ public class ProtoHead {
     public byte getStatus() {
         return status;
     }
+
+    public boolean isSuccess() {
+        return status == ErrorCodeConstants.SUCCESS;
+    }
 }

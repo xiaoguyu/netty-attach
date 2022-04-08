@@ -1,4 +1,4 @@
-package com.wjw.server.handler;
+package com.wjw.handler;
 
 import com.wjw.proto.AttachProto;
 import io.netty.buffer.ByteBuf;
