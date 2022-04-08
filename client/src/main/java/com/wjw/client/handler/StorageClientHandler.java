@@ -1,8 +1,7 @@
-package com.wjw.server.handler;
+package com.wjw.client.handler;
 
 import com.wjw.proto.OtherConstants;
 import com.wjw.proto.ProtoHead;
-import com.wjw.server.config.CmdHandlerFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,12 +13,12 @@ import org.slf4j.LoggerFactory;
 /**
  * @author wjw
  * @description: 请求分发
- * @title: StorageServerHandler
- * @date 2022/4/6 13:54
+ * @title: StorageClientHandler
+ * @date 2022/4/7 15:33
  */
-public class StorageServerHandler extends ChannelInboundHandlerAdapter {
+public class StorageClientHandler extends ChannelInboundHandlerAdapter {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(StorageServerHandler.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(StorageClientHandler.class);
 
     private ProtoHead header;
 
@@ -34,8 +33,8 @@ public class StorageServerHandler extends ChannelInboundHandlerAdapter {
             in.readBytes(bytes);
             header = ProtoHead.createFromBytes(bytes);
             // 根据协议命令生成不同处理器
-            ChannelHandler handler = CmdHandlerFactory.createHandler(header.getCmd());
-            ctx.pipeline().addLast(handler);
+//            ChannelHandler handler = CmdHandlerFactory.createHandler(header.getCmd());
+//            ctx.pipeline().addLast(handler);
 
             // 将请求头设置进管道中，整个连接共享
             AttributeKey<ProtoHead> key = AttributeKey.valueOf(OtherConstants.ATTR_KEY_HEAD);

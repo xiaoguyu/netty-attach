@@ -1,7 +1,7 @@
 package com.wjw.storage;
 
+import com.wjw.proto.AttachRequest;
 import com.wjw.proto.CmdConstants;
-import com.wjw.proto.FdfsRequest;
 import com.wjw.proto.OtherConstants;
 import com.wjw.proto.ProtoHead;
 import com.wjw.proto.mapper.BytesUtil;
@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
  * @title: FileDownloadRequest
  * @date 2022/4/6 14:56
  */
-public class FileDownloadRequest extends FdfsRequest {
+public class FileDownloadRequest extends AttachRequest {
 
     /**
      * 参数长度

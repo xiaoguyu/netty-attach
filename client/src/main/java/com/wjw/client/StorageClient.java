@@ -2,6 +2,7 @@ package com.wjw.client;
 
 import com.wjw.client.handler.FileDownloadReceiveHandler;
 import com.wjw.client.handler.RequestSendHandler;
+import com.wjw.client.handler.StorageClientHandler;
 import com.wjw.storage.FileDownloadRequest;
 import com.wjw.storage.FileUploadRequest;
 import io.netty.bootstrap.Bootstrap;
@@ -41,14 +42,14 @@ public class StorageClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new RequestSendHandler(), new FileDownloadReceiveHandler());
+                    ch.pipeline().addLast(new RequestSendHandler(), new StorageClientHandler(), new FileDownloadReceiveHandler());
                 }
             });
 
             ChannelFuture f = b.connect(host, port).sync();
             channel = f.channel();
 //            write("C:\\Users\\wjw\\Desktop\\hotelQrCode.jpg");
-            download("j40q0h.jpg");
+            download("y5knpq.jpg");
             f.channel().closeFuture().sync();
         } finally {
             worderGroup.shutdownGracefully();

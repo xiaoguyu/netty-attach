@@ -1,8 +1,7 @@
 package com.wjw.storage;
 
-import cn.hutool.core.lang.Assert;
+import com.wjw.proto.AttachResponse;
 import com.wjw.proto.ErrorCodeConstants;
-import com.wjw.proto.FdfsResponse;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -15,7 +14,7 @@ import java.nio.charset.Charset;
  * @title: FileDownloadResponse
  * @date 2022/4/6 16:12
  */
-public class FileDownloadResponse extends FdfsResponse {
+public class FileDownloadResponse extends AttachResponse {
 
     /**
      * 发送文件长度

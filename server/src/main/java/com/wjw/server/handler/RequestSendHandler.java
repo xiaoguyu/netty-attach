@@ -1,12 +1,10 @@
 package com.wjw.server.handler;
 
-import com.wjw.proto.FdfsProto;
+import com.wjw.proto.AttachProto;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.util.CharsetUtil;
-
-import java.nio.charset.Charset;
 
 /**
  * @author wjw
@@ -14,10 +12,10 @@ import java.nio.charset.Charset;
  * @title: StorageClientHandler
  * @date 2022/4/1 11:07
  */
-public class RequestSendHandler extends MessageToByteEncoder<FdfsProto> {
+public class RequestSendHandler extends MessageToByteEncoder<AttachProto> {
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, FdfsProto msg, ByteBuf out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, AttachProto msg, ByteBuf out) throws Exception {
         msg.writeBytes(ctx, CharsetUtil.UTF_8);
 
         ctx.flush();

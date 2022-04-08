@@ -1,7 +1,7 @@
 package com.wjw.storage;
 
+import com.wjw.proto.AttachRequest;
 import com.wjw.proto.CmdConstants;
-import com.wjw.proto.FdfsRequest;
 import com.wjw.proto.OtherConstants;
 import com.wjw.proto.ProtoHead;
 import com.wjw.proto.mapper.BytesUtil;
@@ -17,7 +17,7 @@ import java.nio.charset.Charset;
  * @title: FileUploadRequest
  * @date 2022/3/31 15:16
  */
-public class FileUploadRequest extends FdfsRequest {
+public class FileUploadRequest extends AttachRequest {
 
     private static final byte uploadCmd = CmdConstants.STORAGE_PROTO_CMD_UPLOAD_FILE;
     private static final byte uploadAppenderCmd = CmdConstants.STORAGE_PROTO_CMD_UPLOAD_APPENDER_FILE;

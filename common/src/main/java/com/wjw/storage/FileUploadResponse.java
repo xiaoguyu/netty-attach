@@ -1,6 +1,6 @@
 package com.wjw.storage;
 
-import com.wjw.proto.FdfsResponse;
+import com.wjw.proto.AttachResponse;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
  * @title: FileUploadResponse
  * @date 2022/4/1 14:06
  */
-public class FileUploadResponse extends FdfsResponse {
+public class FileUploadResponse extends AttachResponse {
 
     private String path;
 

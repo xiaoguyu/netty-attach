@@ -11,12 +11,12 @@ import java.nio.charset.Charset;
 /**
  * @author wjw
  * @description: 协议基类
- * @title: FdfsProto
+ * @title: AttachProto
  * @date 2022/4/1 14:00
  */
-public abstract class FdfsProto {
+public abstract class AttachProto {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(FdfsProto.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(AttachProto.class);
 
     /**
      * 报文头

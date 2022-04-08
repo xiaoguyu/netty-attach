@@ -30,4 +30,9 @@ public class OtherConstants {
     public static final byte FDFS_FILE_EXT_NAME_MAX_LEN = 6;
     // 文件路径长度
     public static final byte FDFS_FILE_PATH_LEN = 10;
+
+    /**
+     * channel共享请求头的key
+     */
+    public static final String ATTR_KEY_HEAD = "head";
 }

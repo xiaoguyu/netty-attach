@@ -14,10 +14,10 @@ import java.nio.charset.Charset;
 /**
  * @author wjw
  * @description: 请求响应
- * @title: FdfsResponse
+ * @title: AttachResponse
  * @date 2022/4/1 13:56
  */
-public abstract class FdfsResponse extends FdfsProto {
+public abstract class AttachResponse extends AttachProto {
 
     /**
      * 异常信息

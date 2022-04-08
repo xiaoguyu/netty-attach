@@ -1,10 +1,12 @@
 package com.wjw.handler;
 
 
+import com.wjw.proto.OtherConstants;
 import com.wjw.proto.ProtoHead;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.AttributeKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,9 @@ public abstract class AttachBaseHandler extends SimpleChannelInboundHandler<Byte
     private void baseInit(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         flgInited = true;
         this.ctx = ctx;
+        // 处理请求头
+        AttributeKey<ProtoHead> key = AttributeKey.valueOf(OtherConstants.ATTR_KEY_HEAD);
+        header = ctx.channel().attr(key).get();
         init(ctx, msg);
     }
 
@@ -67,13 +72,6 @@ public abstract class AttachBaseHandler extends SimpleChannelInboundHandler<Byte
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         if (!flgInited) {
             baseInit(ctx, msg);
-        }
-        // 处理请求头
-        if (header == null) {
-            if (msg.readableBytes() < ProtoHead.HEAD_LENGTH) {
-                return;
-            }
-            header = ProtoHead.createFromBytes(msg);
         }
         read(ctx, msg);
     }

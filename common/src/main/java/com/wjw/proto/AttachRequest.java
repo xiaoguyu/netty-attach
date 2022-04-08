@@ -12,10 +12,10 @@ import java.nio.charset.Charset;
 /**
  * @author wjw
  * @description: 请求基类
- * @title: FdfsRequest
+ * @title: AttachRequest
  * @date 2022/3/31 15:05
  */
-public abstract class FdfsRequest extends FdfsProto {
+public abstract class AttachRequest extends AttachProto {
 
     /**
      * 发送文件
