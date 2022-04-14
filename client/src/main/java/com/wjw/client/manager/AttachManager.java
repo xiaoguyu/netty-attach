@@ -11,6 +11,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.util.AttributeKey;
 
 /**
@@ -57,7 +58,7 @@ public class AttachManager {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new RequestSendHandler(), new StorageClientHandler());
+                    ch.pipeline().addLast(new ChunkedWriteHandler(), new RequestSendHandler(), new StorageClientHandler());
                     // 根据不同请求设置不同的接收处理器
                     ChannelHandler handler = CmdReceiveHandlerFactory.createHandler(request.getHead().getCmd());
                     if (handler != null) {

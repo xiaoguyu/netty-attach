@@ -3,7 +3,7 @@ package com.wjw.proto;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.DefaultFileRegion;
+import io.netty.handler.stream.ChunkedNioStream;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,7 +34,8 @@ public abstract class AttachRequest extends AttachProto {
         if (null != inputFile) {
             try {
                 // 零拷贝
-                ChannelFuture f = ctx.write(new DefaultFileRegion(inputFile.getChannel(), 0, getFileSize()));
+//                ChannelFuture f = ctx.write(new DefaultFileRegion(inputFile.getChannel(), 0, getFileSize()));
+                ChannelFuture f = ctx.write(new ChunkedNioStream(inputFile.getChannel()));
                 f.addListener((ChannelFutureListener) future -> {
                     inputFile.close();
                 });
